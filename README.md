@@ -1,33 +1,37 @@
 # Workflow Architect
 
-**A multi-agent AI planner that designs optimal workflows through structured deliberation.**
+**A multi-agent AI system that reads call transcripts and designs a custom proposal-creation workflow.**
 
-Built as a response to Challenge 2 of the KTS AI Operations Specialist application — instead of just describing a transcript-to-proposal workflow, I built an AI system that *designs* the optimal workflow through multi-agent reasoning.
+Built for Challenge 2 of the KTS AI Operations Specialist application. Instead of manually designing a transcript-to-proposal workflow, I built an AI system that ingests real call transcripts and plans the workflow for you. Different transcripts produce different plans.
 
 ## What It Does
 
-Four specialized AI agents deliberate to answer the question: *"How do you turn 3 call transcripts into a tailored transit consulting proposal in under 60 minutes?"*
+Four AI agents read your call transcripts and collaboratively design a step-by-step plan for turning those conversations into a winning proposal. The plan includes what to automate, where human judgment is needed, and which tools to use at each step.
 
 | Agent | Role |
 |-------|------|
-| **Researcher** | Investigates what makes transit proposals win — structure, tone, failure modes |
-| **Architect** | Designs the step-by-step workflow given the 60-minute constraint |
-| **Critical Eye** | Reviews every automated step — where does a wrong AI call cascade into a disaster? |
-| **Toolsmith** | Maps real tools (Claude, Granola, Zapier, Google Docs) to each step |
+| **Researcher** | Reads transcripts, identifies what this client cares about, combines with proposal best practices |
+| **Architect** | Designs a step-by-step workflow tailored to the topics and sensitivities in these calls |
+| **Critical Eye** | Reviews the plan — where would a wrong AI call cause a disaster with THIS client? |
+| **Toolsmith** | Maps practical tools to each step — Claude API, Granola, Google Docs, Zapier, etc. |
 
 ### The Deliberation Loop
 
 ```
-Researcher → Architect v1 → Critical Eye → Toolsmith → Architect v2 (revised) → Critical Eye final pass
+Researcher -> Architect v1 -> Critical Eye -> Toolsmith -> Architect v2 (revised) -> Critical Eye final pass
 ```
 
-The agents don't just run independently — each one receives the outputs of previous agents and responds to them. The Architect's plan changed significantly after the Critical Eye challenged it and the Toolsmith flagged fragile integrations.
+Each agent receives all prior outputs. The Architect's plan changes significantly after feedback.
 
-## The Output
+## Using Your Own Transcripts
 
-The system produced a **55-minute, 8-step workflow** with 3 critical human judgment checkpoints. The most interesting finding: the Critical Eye agent kept stripping automation *out*. It argued that in transit consulting, misreading political subtext or overpromising scope doesn't just lose a deal — it damages the relationship permanently.
+To generate a workflow plan for your own client:
 
-The full deliberation outputs are in [`output/`](output/).
+1. **Add your transcript files** to the `transcripts/` folder (any `.txt` files)
+2. **Delete or move** the example files (prefixed with `example_`)
+3. **Run the system** — it will read your transcripts and generate a tailored plan
+
+The included `example_*.txt` files are mock transcripts for a fictional transit agency (Lakeview Regional Transit Authority) used for testing.
 
 ## Quick Start
 
@@ -44,6 +48,9 @@ echo "ANTHROPIC_API_KEY=your-key-here" > .env
 # Run the multi-agent deliberation (CLI)
 python orchestrator.py
 
+# Generate the workflow PDF (reads from output/)
+python generate_pdf.py
+
 # Or launch the Streamlit UI
 streamlit run app.py
 ```
@@ -52,12 +59,16 @@ streamlit run app.py
 
 ```
 workflow_architect/
-├── orchestrator.py      # Multi-agent system — agent prompts, runner, deliberation loop
-├── app.py               # Streamlit UI — visualizes agent reasoning in real-time
-├── generate_pdf.py      # Generates the one-page PDF submission
+├── orchestrator.py        # Multi-agent system: prompts, runner, deliberation loop
+├── app.py                 # Streamlit UI: watch agents deliberate in real-time
+├── generate_pdf.py        # Reads agent outputs, uses Claude to extract steps, renders flowchart PDF
 ├── requirements.txt
-├── .env                 # Your API key (gitignored)
-└── output/              # Agent outputs from the latest run
+├── .env                   # Your API key (gitignored)
+├── transcripts/           # Put your call transcripts here (.txt files)
+│   ├── example_call_1_intro.txt
+│   ├── example_call_2_technical.txt
+│   └── example_call_3_scope.txt
+└── output/                # Agent outputs from the latest run
     ├── 1_researcher.md
     ├── 2_architect.md
     ├── 3_critical_eye.md
@@ -72,5 +83,5 @@ workflow_architect/
 - **Claude API** (Anthropic) — powers all four agents via `claude-sonnet-4-20250514`
 - **Python** — orchestration and PDF generation
 - **Streamlit** — interactive UI for watching agents deliberate
+- **fpdf2** — PDF generation with color-coded flowchart
 - **GitHub Copilot** — assisted in building the prototype
-- **fpdf2** — PDF generation for the one-page submission

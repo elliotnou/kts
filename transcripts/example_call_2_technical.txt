@@ -1,0 +1,55 @@
+Call 2 - Technical Deep-Dive
+Date: April 21, 2026
+Participants: Stephen Kuban (KTS), Director Patricia Mwangi (Lakeview Regional Transit Authority), Senior Planner David Chen
+Duration: 45 minutes
+---
+
+Stephen: Patricia, David - thanks for the follow-up. Patricia mentioned the data challenges last week. David, I'd love to hear your perspective on the technical side.
+
+David: Sure. So our biggest headache is that our data lives in four or five different places and none of them talk to each other. Trapeze for scheduling, a separate system for paratransit, farebox from GFI, APC data that gets dumped into spreadsheets, and then our GTFS feed is maintained by the vendor.
+
+Stephen: When you say the APC data gets dumped into spreadsheets - what does that process look like?
+
+David: It's manual. I download CSV files from the APC system every month, clean them up in Excel - and by clean up I mean I delete the rows where the counts are obviously wrong, like when it says 300 people boarded at a stop that serves maybe 20 per day. Then I make pivot tables for the monthly board report.
+
+Stephen: How long does that take you?
+
+David: The monthly report takes me about two full days. And honestly, by the time I'm done cleaning the data and making charts, I don't have time to actually analyze what the data is telling us.
+
+Patricia: This is what I was saying last week. We're spending all our time on data hygiene instead of actual planning.
+
+Stephen: David, what would be most useful if you could wave a magic wand?
+
+David: Two things. First, I want to be able to see ridership patterns at the stop level across time - not just monthly totals, but time-of-day, day-of-week patterns. When did demand shift? Where are people actually going? Second, I want to be able to model scenarios. Like if we add frequency on Route 3 during the afternoon and reduce it on Route 12 in the evening, what does that do to our operating cost and estimated ridership?
+
+Stephen: Scenario modeling is really valuable. What tools does your team use day to day? Are you comfortable with anything beyond Excel?
+
+David: I can do basic stuff in Python. I took an online course a couple years ago. But I haven't had time to use it since. Our part-time planner, Jamie, is honestly more technical than me - she was doing GIS work at her last job. But she's only here three days a week.
+
+Patricia: And we can't hire another planner. The budget just isn't there.
+
+Stephen: What about the state reporting requirements? How much of David's time goes to compliance?
+
+Patricia: Too much. We report to the state quarterly - service hours, ridership by mode, ADA compliance metrics, on-time performance. It's probably 20% of David's time.
+
+David: More like 25%. And it's mostly reformatting data we already have into the state's template. It's mind-numbing but it has to be right.
+
+Stephen: So if we could automate the compliance reporting piece, that frees up what - a day a week for David?
+
+Patricia: At least. And that's a day he could spend on the network review.
+
+Stephen: Let me ask about the September timeline. What does the board actually need to see? A full network redesign? Or is it more of a "here's what we recommend and here's the data supporting it"?
+
+Patricia: The second one. I'm not looking for a full redesign right now. I want two things: first, a clear picture of current demand patterns so we can make evidence-based route adjustments. Second, a framework my team can use going forward to monitor performance and make incremental changes without hiring a consultant every time.
+
+David: Can I add something? Whatever we end up with, it needs to work with our existing systems. We can't rip and replace Trapeze - we're locked into that contract for three more years.
+
+Stephen: Absolutely. Everything we build would layer on top of what you have. One more question - when you say the board needs this in September, is there a specific board meeting date?
+
+Patricia: September 18th. It's the quarterly board meeting. The network review is already on the agenda.
+
+Stephen: Got it. That gives us about five months. Let me put together a scope and we can discuss pricing on the next call.
+
+Patricia: One thing on pricing - our procurement threshold for sole-source contracts is $75,000. Above that we'd need to go through a formal RFP process, and that takes months we don't have.
+
+Stephen: Good to know. We'll work with that.

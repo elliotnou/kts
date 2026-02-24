@@ -1,126 +1,91 @@
 # Architect (Revised)
 
-# 60-Minute Transit Proposal Workflow (Final Version v3.0)
+# Revised Workflow Plan: Lakeview Regional Transit Authority Proposal Development
 
-## Major Revisions from V2
-- **Removed automated research step** (too brittle for 60-minute deadline)
-- **Added critical scope reality checkpoint** at Step 5.5
-- **Streamlined final review** from 10 to 5 minutes
-- **Simplified tech stack** to manual-friendly tools
-- **Strengthened political complexity assessment** in strategic framing
+**Integration Changes**: Based on Critical Eye feedback, I've added 3 mandatory human checkpoints for political sensitivity. Based on Toolsmith recommendations, I've specified exact tools and eliminated complex integrations for solo sustainability.
 
-## The Workflow
+## Phase 1: Context Extraction & Client Intelligence (12 minutes)
 
-### Step 1: Transcript Data Extraction (5 minutes, Automated)
-**Tool:** Claude API (manual web interface initially)
-**Input:** 3 call transcripts pasted into Claude
-**Output:** Structured extraction containing:
-- Direct client quotes about pain points
-- Budget signals and timeline constraints mentioned
-- Stakeholder names and concerns raised
-- Technical requirements with specificity levels
-- Decision urgency indicators (board meetings, deadlines, political pressure)
+**Step 1: Transcript Processing** (3 minutes, automated)
+- **Tool**: OpenAI GPT-4 API with custom prompt templates
+- **Process**: Extract Patricia's exact language ("mind-numbing," "tell the story"), technical constraints (Trapeze 3-year lock, David's "basic Python"), political hot spots (Route 7 controversy, heated public meeting)
+- **Output**: Structured JSON with pain points, technical specs, political sensitivities, budget parameters
+- **Why this tool**: Best context retention across 3 long transcripts, reliable structured output
 
-*Claude prompt: "Extract transit consulting proposal data from these transcripts, focusing on client's exact language about problems and constraints."*
+**Step 2: Political Risk Mapping** (4 minutes, human judgment - NEW CHECKPOINT)
+- **Tool**: Google Sheets political sensitivity checklist
+- **Critical human decision**: Patricia mentioned "very heated public meeting" about Route 7 cuts. Council members "think we should just cut routes that don't perform well." This isn't generic equity concern - it's her active battle. Must frame paratransit analysis as "strategic resource reallocation" NOT "cost reduction" (which validates council's cut-routes position)
+- **Output**: Risk-assessed messaging framework avoiding political landmines
+- **Cost of AI mistake**: Proposal sounds like we're validating council's "cut underperforming routes" stance, torpedoing Patricia's defensive position
 
-### Step 2: Strategic Framing Decision (5 minutes, Human)
-**Tool:** Google Docs template
-**Input:** Claude's extraction + your conversation memory
-**Critical questions to answer:**
-- What's their #1 priority based on emotional emphasis, not just word count?
-- What political landmines did they hint at? (community groups, board dynamics, city council pressure)
-- Which stakeholder is their biggest threat if we get this wrong?
-- What timeline pressure is really driving this? (budget cycles, elections, compliance deadlines)
+**Step 3: Technical Reality Check** (3 minutes, human calibration - NEW CHECKPOINT)  
+- **Tool**: Skills assessment matrix in Notion
+- **Critical human decision**: David said "basic stuff in Python" + "haven't had time to use it." This is polite for "barely functional." Patricia complained TWICE about consultants leaving tools "nobody could replicate." Must dial back technical complexity significantly.
+- **Output**: Recalibrated solution complexity matching actual (not stated) capabilities
+- **Cost of AI mistake**: Repeat exact pattern Patricia complained about - sophisticated tools her team can't maintain
 
-**Output:** 2-paragraph strategy memo defining real problem and political navigation approach.
+**Step 4: Client Language Bank** (2 minutes, automated)
+- **Tool**: GPT-4 API extracting client-specific terminology
+- **Process**: Harvest conversational phrases for proposal personalization
+- **Output**: Language bank for natural proposal tone matching Stephen's collaborative style
 
-*This is your highest-value 5 minutes. AI cannot read subtext about political complexity.*
+## Phase 2: Solution Architecture & Case Study Assembly (15 minutes)
 
-### Step 3: Proposal Structure Generation (6 minutes, Automated)
-**Tool:** Claude API + Google Docs template
-**Input:** Strategy memo + transcript extraction
-**Output:** Proposal skeleton with:
-- Problem statement using their exact quotes
-- Scope approach addressing their stated constraints
-- Timeline draft accounting for their approval processes
-- Pricing framework matching budget signals
+**Step 5: Technical Solution Design** (6 minutes, human with AI assist)
+- **Tool**: GPT-4 API with transit industry prompt library
+- **Process**: Map Patricia's "four or five different places" data sources to simplified integration approach. Specify beginner-friendly Python tools with extensive documentation and training support
+- **Human oversight**: Ensure solution complexity matches recalibrated technical assessment from Step 3
+- **Output**: Technical methodology section with realistic complexity
 
-*Claude creates first draft; human immediately reviews structure before content generation.*
+**Step 6: Case Study Database Query** (4 minutes, automated)
+- **Tool**: Airtable API filtering case studies by agency size (50-100 buses), scope (data integration), geography (Ontario preferred)
+- **Process**: Pull "three agencies in Ontario" examples Patricia specifically requested
+- **Output**: Credibility-building case studies with similar constraints
+- **Why Airtable**: Visual interface for maintaining case study database, API access for automation
 
-### Step 4: Content Generation Sprint (18 minutes, Human + AI Hybrid)
-**Tools:** Claude API + Google Docs collaborative editing
-**Breakdown:**
-- Minutes 1-6: Human writes executive summary (requires strategic synthesis)
-- Minutes 7-12: AI drafts methodology sections using client data points
-- Minutes 13-18: Human edits scope approach and adds conversational callbacks
+**Step 7: Board Presentation Strategy** (3 minutes, human political navigation - NEW CHECKPOINT)
+- **Critical human decision**: Patricia wants "work session" for "skeptical council members" who "respond better to questions." This isn't meeting format - it's political campaign. She's orchestrating opposition defusal before September vote. Must acknowledge political maneuvering without being explicit.
+- **Tool**: Manual strategic planning using conversation context
+- **Output**: Politically-aware engagement approach
+- **Cost of AI mistake**: Generic "stakeholder engagement" misses that Patricia needs partners who understand the chess game
 
-*Key insight: Executive summary cannot be delegated to AI - it requires reading between lines.*
+**Step 8: Pricing & Procurement Alignment** (2 minutes, automated)
+- **Tool**: Simple calculation matching $55-65K range to her $75K sole-source threshold
+- **Process**: Structure three phases matching her "incremental progress" preference
+- **Output**: Procurement-compliant pricing with phase gates
 
-### Step 5.5: Scope Reality Check (3 minutes, Human) **NEW CRITICAL CHECKPOINT**
-**Essential questions:**
-- Can we actually deliver this scope in their timeline with our current team capacity?
-- Are we promising outcomes we can't control? (ridership increases, stakeholder consensus)
-- Does their "simple" request hide complexity they haven't considered?
-- Will their 90-day timeline account for their own internal approval bottlenecks?
+## Phase 3: Document Assembly & Personalization (25 minutes)
 
-**Red flags:** Promising "increased ridership," "stakeholder alignment," or "board approval" as deliverables rather than inputs.
+**Step 9: Template Population** (8 minutes, automated)
+- **Tool**: Google Docs API + Jinja2 templates in Python
+- **Process**: Populate executive summary, methodology, deliverables, timeline sections using extracted context
+- **Why Google Docs**: Patricia needs to "review with David" - collaborative editing essential for transit agencies
+- **Output**: Draft proposal with client-specific content
 
-*Cost of skipping this: Winning a project that destroys your team or reputation.*
+**Step 10: Conversation Reference Integration** (7 minutes, automated with human spot-checks)
+- **Tool**: GPT-4 API weaving specific conversation details throughout document
+- **Process**: Include David's Excel pivot tables, Jamie's three-day schedule, 85 buses, 78% ridership recovery, quarterly state reporting, etc.
+- **Human validation**: Ensure references are accurate and contextually appropriate
+- **Output**: Highly personalized proposal proving conversation continuity
 
-### Step 6: Compliance & Polish (8 minutes, Automated)
-**Tool:** Claude API + Grammarly
-**Input:** Draft proposal
-**Automated checks:**
-- Transit terminology consistency
-- Client name/project details verified throughout
-- Pricing calculations cross-checked
-- Professional formatting applied
+**Step 11: Political Messaging Refinement** (6 minutes, human)
+- **Process**: Apply risk-assessed messaging from Step 2 throughout document
+- **Focus areas**: Route 7 equity framing, paratransit as strategic reallocation, work session as collaboration opportunity
+- **Tool**: Manual editing with political sensitivity checklist
+- **Output**: Politically-calibrated proposal language
 
-### Step 7: Final Strategic Review (5 minutes, Human) **STREAMLINED**
-**Tool:** Google Docs print preview
-**Speed-focused checklist:**
-- Does executive summary match their actual top concern?
-- Are we solving the problem they emphasized most emotionally?
-- Do timeline and price feel proportional to scope?
-- Quick scan for obvious errors or overpromising
+**Step 12: Sustainability Emphasis** (4 minutes, automated)
+- **Tool**: GPT-4 API emphasizing training approach, documentation, working sessions
+- **Process**: Address Patricia's "consultants come and leave" concern throughout proposal
+- **Output**: Sustainability-focused engagement description
 
-*Skip the "read as client" exercise for 60-minute turnarounds. Trust your experience to catch fatal flaws quickly.*
+## Phase 4: Quality Control & Professional Polish (8 minutes)
 
-### Step 8: Delivery Package (5 minutes, Automated)
-**Tools:** Pandoc + Gmail
-**Output:** 
-- PDF formatted for professional submission
-- Email draft referencing specific call moments
-- Follow-up calendar scheduling
-- Internal project setup checklist (if proposal wins)
+**Step 13: Grammar & Tone Check** (3 minutes, automated)
+- **Tool**: Grammarly API for automated proofreading
+- **Process**: Professional polish expected by public sector clients
+- **Output**: Publication-ready document quality
 
-## Simplified Tech Stack (V1 Implementation)
-
-**Start immediately with:**
-1. **Granola → Claude web interface** (manual paste for reliability)
-2. **Google Docs** for all writing and collaboration
-3. **Pandoc** for PDF conversion
-4. **Manual handoffs** between steps (add automation later where you feel pain)
-
-**Skip initially:** Web scraping, complex API chains, automated research. These add fragility without proportional value in a 60-minute workflow.
-
-## Key Success Factors
-
-**Human judgment preserved** at the two make-or-break moments:
-- Step 2: Reading political subtext and real priorities
-- Step 5.5: Assessing delivery reality against promises
-
-**Speed enablers:** 
-- Claude handles all data extraction and first-draft content
-- Human focuses only on strategy and quality gates
-- Parallel processing where possible (structure generation while reviewing strategy)
-
-**Quality protection:** 
-- Every proposal references specific conversation details
-- Political complexity explicitly assessed
-- Scope reality check prevents overcommitting
-
-## Total Timing: 55 minutes
-*5-minute buffer for unexpected complexity or technical delays*
-
-This workflow transforms conversation insights into winning proposals by combining AI efficiency with human judgment at the exact moments that determine success or failure. The simplified tech stack ensures reliability under pressure, while the strategic checkpoints prevent the costly mistakes that destroy consulting relationships.
+**Step 14: Final Context Validation** (3 minutes, human)
+- **Process**: Verify all conversation references accurate, technical solution matches capabilities, political framing supports Patricia's position
+- **Tool**: Manual review against transcript excerpts

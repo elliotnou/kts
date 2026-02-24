@@ -9,7 +9,8 @@ Includes Mermaid flowcharts for the deliberation loop and designed workflow.
 import streamlit as st
 import time
 import os
-from orchestrator import run_deliberation, save_results, CHALLENGE
+import glob
+from orchestrator import run_deliberation, save_results, CHALLENGE, load_transcripts
 
 st.set_page_config(
     page_title="Workflow Architect",
@@ -106,6 +107,20 @@ graph LR
 """)
 
 st.divider()
+
+# ---------------------------------------------------------------------------
+# Transcript Viewer
+# ---------------------------------------------------------------------------
+transcript_files = sorted(glob.glob("transcripts/*.txt"))
+if transcript_files:
+    st.markdown("#### 📞 Input Transcripts")
+    st.caption("The agents read these transcripts and design a workflow plan tailored to this specific client.")
+    tabs = st.tabs([os.path.basename(f).replace(".txt", "").replace("_", " ").title() for f in transcript_files])
+    for tab, filepath in zip(tabs, transcript_files):
+        with tab:
+            with open(filepath) as fh:
+                st.text(fh.read())
+    st.divider()
 
 # ---------------------------------------------------------------------------
 # State management
@@ -287,24 +302,29 @@ graph TD
             st.metric("Total Reasoning", f"{total_chars:,} chars")
     
     else:
-        st.info("Click **Run Multi-Agent Deliberation** to start the planning session. Each agent will reason through the challenge and collaborate to design the optimal workflow.")
+        st.info("Click **Run Multi-Agent Deliberation** to start. The agents will read the transcripts and collaboratively design a workflow plan tailored to this specific client.")
         
         st.markdown("### How It Works")
+        st.markdown("""
+This system doesn't write the proposal — it **plans how to create one**. Different clients need different plans because every conversation reveals unique needs, politics, budget constraints, and sensitivities.
+
+The four agents read your actual transcripts and collaborate:
+""")
         
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("""
             **🔍 Researcher**  
-            Investigates what makes transit consulting proposals win — structure, tone, common failures, and what decision-makers actually look for.
+            Reads the transcripts and identifies what this specific client cares about, then combines that with best practices for winning transit proposals.
             
             **🏗️ Architect**  
-            Takes the research and designs a concrete step-by-step workflow with timing, inputs, outputs, and human/AI designation for each step.
+            Designs a step-by-step workflow plan tailored to the topics, data needs, and sensitivities discussed in these calls.
             """)
         with col2:
             st.markdown("""
             **👁️ Critical Eye**  
-            Reviews every automated step and asks: "Where would a wrong AI call cascade into a disaster?" Adds human judgment checkpoints with specific rationale.
+            Reviews the plan and asks: "Given what THIS client said, where would a wrong AI call cause a disaster?" Adds human judgment checkpoints with transcript-specific rationale.
             
             **🔧 Toolsmith**  
-            Maps real tools (Claude, Granola, Zapier, Google Docs) to each step, prioritizing reliability and solo-maintainability over cleverness.
+            Maps practical tools to each step — Claude API, Granola, Google Docs, Zapier, whatever fits. Prioritizes reliability and solo-maintainability.
             """)

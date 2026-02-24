@@ -1,0 +1,61 @@
+Call 3 - Scope and Next Steps
+Date: April 28, 2026
+Participants: Stephen Kuban (KTS), Director Patricia Mwangi (Lakeview Regional Transit Authority)
+Duration: 25 minutes
+---
+
+Stephen: Patricia, I've been thinking about our conversations and I wanted to run through my initial thinking before I write anything formal.
+
+Patricia: Great - I've been looking forward to this.
+
+Stephen: So I'm thinking about this in three pieces. First: data integration and cleanup. We take your APC data, farebox data, and GTFS feeds and build a unified ridership picture. Not a massive data warehouse - something lightweight that David can maintain. Maybe a set of Python scripts that pull everything together into a clean dataset, with a simple dashboard.
+
+Patricia: I like the sound of lightweight. What about the bad APC data?
+
+Stephen: We'd build in automated quality checks. Instead of David manually deleting rows, we set up rules - if a count exceeds 3 standard deviations from the stop's average, flag it. He reviews flagged records instead of reviewing everything. That alone probably cuts his cleanup time by 80%.
+
+Patricia: David would love that. He was literally complaining about it yesterday.
+
+Stephen: Second piece: the demand analysis. Once we have clean data, we do the time-of-day, day-of-week analysis David wants. We map ridership patterns at the stop and route level, identify where demand has shifted post-pandemic, and find the gaps between current service and current demand.
+
+Patricia: That's the story I need to tell the board.
+
+Stephen: Exactly. And we'd frame it specifically around the equity question - who's riding, where they're going, what happens if service changes. We can use census data to overlay demographics on ridership patterns.
+
+Patricia: Can you include paratransit in that analysis? That's a huge cost driver for us and the board is always asking about it.
+
+Stephen: Yes - that's important. Paratransit demand often relates to fixed-route accessibility gaps. If we can show that improving fixed-route coverage in certain areas would reduce paratransit demand, that's a powerful argument.
+
+Patricia: Oh that's a great point. I hadn't thought about it that way.
+
+Stephen: Third piece: the forward-looking framework. We don't just deliver a report - we teach David and Jamie how to run this analysis themselves. We build simple, documented tools they can use quarterly to update the demand picture and test scenarios.
+
+Patricia: That's the sustainability piece I was asking about. How do you handle the training?
+
+Stephen: We do working sessions. David and Jamie would be involved in the analysis process, not just watching us do it. By the end of the engagement, they've done it themselves at least once with our support. And we leave behind documentation and templates.
+
+Patricia: I love that approach. What are we looking at for pricing?
+
+Stephen: I'm thinking in the range of $55,000 to $65,000. That keeps us under your sole-source threshold. It would cover about 10-12 weeks of work, with the final deliverables targeted for early September, well before your board meeting.
+
+Patricia: That range works. The board approved $80K for the network review, so we have room. Can you break it into phases so I can show incremental progress? The board gets nervous if they don't see anything until the end.
+
+Stephen: Absolutely. I was thinking three phases: Phase 1 is data integration and cleanup - about 3 weeks, deliverable is the unified dataset and David's automated QC process. Phase 2 is the demand analysis - about 5 weeks, deliverable is the ridership analysis and equity mapping. Phase 3 is framework development and training - about 3 weeks, deliverable is the tools, documentation, and a summary presentation for the board.
+
+Patricia: Can you include a mid-point check-in with the board? Maybe after Phase 2? I want them to see the demand data before we present recommendations.
+
+Stephen: Smart. We'll build that in. I can come present preliminary findings at a committee meeting or work session - whatever makes sense for your process.
+
+Patricia: A work session would be better. Less formal, more discussion. The council members who are skeptical respond better when they can ask questions.
+
+Stephen: Perfect. I'll have a formal proposal to you by end of week. Anything else I should include?
+
+Patricia: One thing - can you mention your experience with similar-sized agencies? The board will want to know this isn't theoretical. They'll ask "who else has done this?"
+
+Stephen: I'll include case studies. We've done similar work with three agencies in Ontario in the 50-to-100 bus range. Different contexts but same fundamental challenge - using data to make better decisions with limited resources.
+
+Patricia: Perfect. Send it over and I'll review with David. If it looks good, I can probably get sign-off within two weeks.
+
+Stephen: Sounds great. Talk soon, Patricia.
+
+Patricia: Thanks Stephen. Really appreciate how thoughtful you've been about this.

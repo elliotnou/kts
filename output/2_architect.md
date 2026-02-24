@@ -1,101 +1,90 @@
 # Architect
 
-# 60-Minute Transit Proposal Workflow
+# Workflow Plan: Lakeview Regional Transit Authority Proposal Development
 
-## Revised Workflow Design (v2.0)
+Based on these transcripts, here's a 60-minute workflow specifically designed for Patricia's context, technical constraints, and political sensitivities:
 
-*Changes from v1: Added human judgment checkpoints, automated research tools, and streamlined timing based on agent feedback.*
+## Phase 1: Context Extraction & Framing (12 minutes)
 
-### Step 1: Instant Transcript Processing (5 minutes, Automated)
-**Tool:** AI transcript processor with transit consulting template
-**Input:** 3 call transcripts
-**Output:** Structured data extract containing:
-- Client pain points (exact quotes)
-- Budget/timeline constraints mentioned
-- Stakeholder concerns raised
-- Technical requirements specified
-- Decision-maker priorities ranked by frequency mentioned
+**Step 1: Pain Point Mapping** (5 minutes, automated)
+- AI extracts specific operational challenges: David's 2-day monthly reports, 25% time on compliance, manual APC data cleaning
+- Identifies political hot buttons: Route 7/medical center controversy, council split on route cuts
+- Tags budget constraints: $75K sole-source threshold, $12M operating budget, staff limitations
 
-*Automated sentiment analysis flags emotional language around specific topics (e.g., "frustrated with current ridership data" gets tagged as high-priority pain point).*
+**Step 2: Client Language Bank** (4 minutes, automated)  
+- Harvests Patricia's exact phrases: "tell the story," "mind-numbing," "we've had consultants deliver 200-page reports and leave"
+- Captures technical specifics: Trapeze contract (3 years), APC on 40% of fleet, GTFS vendor relationship
+- Builds personalization database: David's Python skills, Jamie's GIS background, part-time constraints
 
-### Step 2: Client Context Research (8 minutes, Automated)
-**Tool:** Web scraper + transit database integration
-**Input:** Agency name, recent board meeting mentions from transcripts
-**Output:** Current context brief including:
-- Recent board decisions (past 90 days)
-- Active community concerns from public meetings
-- Peer agency comparisons for benchmarking
-- Relevant compliance deadlines or federal funding cycles
+**Step 3: Proposal Structure Selection** (3 minutes, human judgment)
+- Choose phased approach matching Patricia's "incremental progress" preference
+- Confirm September 18th timeline with mid-point work session for skeptical council members
+- Validate $55-65K range against her stated $80K budget approval
 
-*Critical addition: Real-time data on their current projects and political climate.*
+## Phase 2: Technical Solution Mapping (15 minutes)
 
-### Step 3: Strategic Framing Decision (4 minutes, Human)
-**Input:** Processed transcripts + context brief
-**Output:** Strategy memo (1 paragraph) answering:
-- What's their #1 priority based on conversation emphasis?
-- What political/stakeholder pressure are they managing?
-- Which of our capabilities best addresses their stated urgency?
+**Step 4: Data Integration Specification** (7 minutes, human with AI assist)
+- Map Patricia's "four or five different places" data sources to integration approach
+- Specify Python-based solution matching David's skill level ("basic stuff in Python")
+- Design automated quality checks addressing APC data cleaning pain point
 
-*Human judgment essential here: AI can't read between lines on political sensitivities or stakeholder dynamics that weren't explicitly stated.*
+**Step 5: Political Narrative Development** (8 minutes, human judgment critical)
+- Frame equity analysis around Route 7 example and "200 seniors can't get to medical center"
+- Position paratransit analysis as cost reduction opportunity (Patricia's "great point" reaction)
+- Structure board presentation approach for "council members who are skeptical"
 
-### Step 4: Proposal Structure Generation (7 minutes, Automated)
-**Tool:** Dynamic template engine
-**Input:** Strategy memo + transcript data
-**Output:** Proposal outline with:
-- Problem statement using their exact language
-- Scope bullets tailored to mentioned constraints
-- Timeline draft accounting for their approval processes
-- Pricing framework matching budget signals
+## Phase 3: Credibility Assembly (8 minutes)
 
-### Step 5: Content Generation Sprint (15 minutes, Human + AI)
-**Hybrid approach:**
-- AI drafts sections using client-specific data points
-- Human writes executive summary and scope approach (requires strategic thinking)
-- AI populates team qualifications with relevant project examples
-- Human adjusts tone and adds conversational callbacks
+**Step 6: Case Study Selection** (5 minutes, automated with human validation)
+- Pull "three agencies in Ontario in the 50-to-100 bus range" examples
+- Match similar constraints: limited staff, data integration challenges, board skepticism
+- Avoid over-technical examples that don't match David/Jamie's capacity
 
-*Key insight: Executive summary cannot be fully automated—it requires synthesis of unstated client needs.*
+**Step 7: Team Positioning** (3 minutes, human)
+- Emphasize working session approach: "David and Jamie would be involved in the analysis process"
+- Highlight sustainability focus addressing her "consultants come and leave" concern
+- Position technical complexity appropriately for their skill levels
 
-### Step 6: Compliance & Polish Check (8 minutes, Automated)
-**Tool:** Proposal audit system
-**Input:** Draft proposal
-**Output:** Quality-checked document with:
-- Transit industry terminology consistency
-- Client name/project specifics verified throughout
-- Formatting standardized to professional template
-- Pricing calculations double-checked
+## Phase 4: Document Assembly & Polish (20 minutes)
 
-### Step 7: Final Human Review (10 minutes, Human)
-**Critical checkpoint:** Print and read full proposal as if you're the client
-- Does it feel like we were listening?
-- Would I bet my reputation on delivering what we're promising?
-- Does the pricing feel justified by the scope?
-- Quick proofread for flow and accuracy
+**Step 8: Executive Summary** (6 minutes, AI with human review)
+- Open with Patricia's core challenge: "making evidence-based route adjustments" without $400K O-D study
+- Frame around board pressure and council skepticism using her language
+- Present three-phase solution matching her procurement and timeline needs
 
-*Non-negotiable human step: AI can't assess whether promises are realistic given actual delivery capacity.*
+**Step 9: Technical Sections** (8 minutes, automated with spot checks)
+- Populate methodology using conversation context (GTFS feeds, APC integration, census overlay)
+- Detail deliverables with specific formats (dashboard for David, presentation for board)
+- Specify training approach with working sessions and documentation
 
-### Step 8: Delivery Preparation (3 minutes, Automated)
-**Output:** 
-- PDF formatted for email/portal submission
-- Email draft referencing specific call moments
-- Calendar invite for follow-up discussion
-- Internal project kickoff tasks if proposal wins
+**Step 10: Final Personalization Pass** (6 minutes, human)
+- Weave in conversation references: David's Excel pivot tables, Jamie's three-day schedule
+- Include operational specifics: 85 buses, 78% ridership recovery, quarterly state reporting
+- Add political context: heated public meeting, mayor support vs. council split
 
-## Key Workflow Features
+## Phase 5: Quality Control & Delivery (5 minutes)
 
-**Speed enablers:** Steps 1, 2, 4, 6, and 8 run in parallel where possible. AI handles all data extraction and formatting while human focuses on strategy and quality.
+**Step 11: Context Validation** (3 minutes, human)
+- Verify all conversation references are accurate and contextually appropriate  
+- Confirm technical solution matches their stated capabilities and constraints
+- Check political framing aligns with Patricia's narrative needs
 
-**Quality gates:** Human judgment at Steps 3 and 7 prevents the two biggest failure modes—misreading priorities and overpromising capabilities.
+**Step 12: Final Review & Send** (2 minutes, human)
+- Proofread for agency-specific terminology and proper names
+- Ensure proposal tone matches Stephen's collaborative, practical approach from calls
+- Format professionally and deliver with timeline for Patricia's review with David
 
-**Client intimacy:** Every section references specific conversation details, making generic responses impossible.
+## Critical Human Judgment Points
 
-**Practical implementation:** Uses existing tools (transcript AI, web scrapers, template engines) rather than requiring custom development.
+**Political Sensitivity**: The Route 7 controversy and council dynamics require careful framing - AI can't assess political risk
+**Technical Appropriateness**: Matching solution complexity to David's "basic Python" skills and Jamie's part-time availability
+**Procurement Navigation**: Understanding public sector constraints and Patricia's $75K threshold strategy
 
-## What Changed from V1
-- Added automated research step for current context
-- Moved pricing generation earlier in process
-- Created parallel processing opportunities
-- Strengthened human judgment checkpoints
-- Reduced total time from 65 to 60 minutes
+## Success Metrics for This Client
 
-This workflow transforms conversation insights into winning proposals by combining AI efficiency with human strategic judgment at the moments that matter most.
+- Patricia says "this feels like you really listened" (conversation continuity)
+- David can envision using the proposed tools (technical fit)  
+- Board presentation approach addresses her council member concerns (political alignment)
+- Timeline and budget reflect her operational constraints (practical feasibility)
+
+This workflow specifically addresses Lakeview's data fragmentation, staff limitations, political dynamics, and Patricia's emphasis on sustainable solutions. The 60-minute timeline is achievable because the conversation transcripts provide rich context that eliminates guesswork about client priorities and constraints.

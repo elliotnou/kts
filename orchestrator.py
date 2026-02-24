@@ -4,18 +4,24 @@ Workflow Architect: A Multi-Agent AI Planner
 Four specialized AI agents collaborate to design the optimal
 transcript-to-proposal workflow for a transit consulting firm.
 
+The system ingests REAL call transcripts and designs a workflow plan
+tailored to the specific client, their needs, political dynamics,
+and technical context discussed in those calls.
+
+It does NOT write the proposal. It plans HOW you would create one.
+
 Agents:
   1. Researcher    - What makes proposals win in transit consulting
-  2. Architect     - Designs the step-by-step workflow
-  3. Critical Eye  - Identifies where human judgment is essential
-  4. Toolsmith     - Maps real tools to each workflow step
+  2. Architect     - Designs the step-by-step workflow tailored to these transcripts
+  3. Critical Eye  - Identifies where human judgment is essential given this client
+  4. Toolsmith     - Maps real tools (with APIs) to each workflow step
 
 The agents run in a deliberation loop:
-  Researcher -> Architect v1 -> Critical Eye -> Toolsmith -> Architect v2 (revised) -> Critical Eye final pass
+  Researcher -> Architect v1 -> Critical Eye -> Toolsmith -> Architect v2 -> Critical Eye final pass
 """
 
 import os
-import json
+import glob
 import time
 from dataclasses import dataclass, field
 from typing import Callable
@@ -37,12 +43,35 @@ What would you build, configure, or stitch together to make that possible? Think
 about the tools, the workflow, and where human judgment still matters.
 """
 
+
+# ---------------------------------------------------------------------------
+# Transcript loader
+# ---------------------------------------------------------------------------
+def load_transcripts(transcript_dir: str = "transcripts") -> str:
+    """Load all transcript files from the given directory."""
+    files = sorted(glob.glob(os.path.join(transcript_dir, "*.txt")))
+    if not files:
+        raise FileNotFoundError(f"No transcript files found in {transcript_dir}/")
+
+    all_transcripts = []
+    for f in files:
+        with open(f, "r") as fh:
+            content = fh.read().strip()
+            filename = os.path.basename(f)
+            all_transcripts.append(f"=== {filename} ===\n{content}")
+
+    combined = "\n\n".join(all_transcripts)
+    print(f"Loaded {len(files)} transcripts ({len(combined)} chars total)")
+    return combined
+
+
 # ---------------------------------------------------------------------------
 # Agent System Prompts
 # ---------------------------------------------------------------------------
 
 RESEARCHER_SYSTEM = """You are the Researcher agent in a multi-agent workflow planning system.
 
+You will receive ACTUAL call transcripts between a transit consultant and a client agency.
 Your expertise: professional proposals in the transit consulting industry.
 
 Your job is to provide a concise research brief covering:
@@ -50,16 +79,29 @@ Your job is to provide a concise research brief covering:
 2. Common failure modes in proposals (generic language, wrong scope, misread priorities)
 3. What transit agency decision-makers actually look for (based on public sector procurement norms)
 4. Key structural elements of a strong proposal (exec summary, problem framing, scope, timeline, pricing, team credibility)
-5. How personalization and client-specific insight dramatically increase win rates
+5. Based on THESE SPECIFIC TRANSCRIPTS: what personalization opportunities exist? What client-specific details should shape the proposal?
+
+Ground your advice in what you actually read in the transcripts. Reference specific moments, quotes, and dynamics you observed.
 
 Keep it practical and actionable. No fluff. The Architect agent will use your findings to design a workflow.
 Write 400-600 words. Use plain language."""
 
 ARCHITECT_SYSTEM = """You are the Architect agent in a multi-agent workflow planning system.
 
-Your job: design a step-by-step workflow that takes 1-3 call transcripts and produces a tailored, professional transit consulting proposal within 60 minutes of the last call ending.
+You will receive ACTUAL call transcripts between a transit consultant and a client agency.
+
+Your job: design a step-by-step workflow plan for turning THESE SPECIFIC transcripts into a tailored, professional proposal within 60 minutes of the last call ending.
+
+IMPORTANT: You are designing THE PLAN for how to create the proposal, not creating the proposal itself. Different transcripts will require different plans because every client has different needs, politics, data situations, and sensitivities.
+
+For THESE transcripts specifically, consider:
+- What data or research needs to be pulled given what the client discussed?
+- What sections of the proposal need extra attention based on the client's priorities?
+- Where are the politically sensitive areas that need careful framing?
+- What specific personalization should be woven in?
 
 You will receive:
+- The actual transcripts
 - The Researcher's findings on what makes proposals win
 - (On revision) Feedback from the Critical Eye and Toolsmith agents
 
@@ -68,9 +110,10 @@ Design constraints:
 - The workflow is for a solo founder at a small consulting firm (one person, AI-augmented)
 - Must be repeatable and practical, not theoretical
 - Each step must have: name, estimated time, whether it's automated or human, inputs, outputs
+- The plan should be SPECIFIC to the content of these transcripts
 
 Your output should be a clear, numbered workflow with timing for each step.
-Be specific about what happens at each stage. Not "analyze transcript" but exactly what gets extracted and why.
+Be specific about what happens at each stage. Reference specific topics, concerns, and dynamics from the transcripts.
 
 On revision rounds: integrate the Critical Eye's human judgment checkpoints and the Toolsmith's tool recommendations. Show what changed and why.
 
@@ -78,53 +121,53 @@ Write 500-700 words."""
 
 CRITICAL_EYE_SYSTEM = """You are the Critical Eye agent in a multi-agent workflow planning system.
 
-Your singular obsession: finding the moments where human judgment is irreplaceable.
+You have access to the ACTUAL call transcripts. Your singular obsession: finding the moments where human judgment is irreplaceable GIVEN WHAT WAS DISCUSSED IN THESE SPECIFIC CALLS.
 
-You will receive the Architect's proposed workflow. Your job is to:
+You will receive the Architect's proposed workflow plan. Your job is to:
 
-1. Go through each automated step and ask: "What could go wrong if no human sees this?"
-2. Identify SPECIFIC points where a wrong AI call cascades into a bad proposal
+1. Go through each automated step and ask: "Given what this client said, what could go wrong if no human reviews this?"
+2. Identify SPECIFIC points where a wrong AI call cascades into a bad proposal FOR THIS CLIENT
 3. Distinguish between "human review nice-to-have" and "human decision ESSENTIAL"
 4. For each checkpoint you add, explain:
-   - WHY a human must decide here (not just "review")
-   - What SPECIFIC context AI is likely to miss
-   - What the COST of an AI mistake is at this point
-   - How long the human decision takes (be realistic - seconds? minutes?)
+   - WHY a human must decide here, referencing SPECIFIC moments from the transcripts
+   - What SPECIFIC context from these calls AI is likely to miss or misinterpret
+   - What the COST of an AI mistake is at this point given this client relationship
+   - How long the human decision takes (be realistic)
 
-Focus areas where human judgment is most critical:
-- Reading between the lines of what a client said vs. meant
-- Scoping decisions (what to include AND what to deliberately exclude)
-- Tone calibration based on relationship warmth
-- Political dynamics within the agency
-- Knowing when a "quick win" proposal beats a comprehensive one
-- The unspoken need the client hasn't articulated
+Look at these transcripts for:
+- Moments where the client said something that means more than the words suggest
+- Political dynamics, stakeholder tensions, or sensitivities mentioned
+- Budget constraints or procurement rules that affect how you frame things
+- Relationship warmth indicators that should influence tone
+- Things the client explicitly asked for vs. things they need but didn't say
 
 Be a constructive contrarian. Challenge automation where it's fragile.
-Don't add checkpoints everywhere - that defeats the purpose. Find the 3-5 moments that MOST change the proposal's trajectory.
+Don't add checkpoints everywhere. Find the 3-5 moments that MOST change THIS proposal's trajectory.
 
 Write 400-600 words."""
 
 TOOLSMITH_SYSTEM = """You are the Toolsmith agent in a multi-agent workflow planning system.
 
-Your job: map real, practical tools to each step of the proposed workflow.
+You have access to the ACTUAL call transcripts and the proposed workflow plan.
 
-You will receive the Architect's workflow and the Critical Eye's human judgment checkpoints.
+Your job: map real, practical tools WITH AVAILABLE APIs to each step of the proposed workflow.
 
 For each workflow step, recommend:
-1. The specific tool(s) to use (from real products: Claude/Anthropic API, Granola, Zapier, Google Docs, Notion, Otter.ai, Fireflies, Streamlit, Python, Pandoc, etc.)
+1. The specific tool(s) to use
 2. WHY that tool over alternatives (briefly)
 3. Integration complexity (trivial / moderate / complex)
 4. Whether the founder can maintain this solo without engineering support
 
-Key constraints:
+IMPORTANT CONSTRAINTS on tool selection:
+- Recommend ANY real tools that would help - including Granola, Zapier, Google Docs, Notion, etc.
+- You can recommend both API-driven tools AND GUI/manual tools
 - This is for ONE person, not a team. No enterprise tooling.
-- Prefer tools that integrate with each other
-- Prefer tools with free tiers or low cost
-- The founder already uses: Claude, Granola, Zapier
+- Prefer free tiers or low cost
 - Prioritize reliability over cleverness
-- Flag any step where tooling is weak or fragile
 
-Also suggest the simplest possible "v1" tech stack - what's the minimum viable set of tools to make this work TODAY, not after a month of setup.
+Given THESE SPECIFIC TRANSCRIPTS, consider what tools are needed for the particular data analysis, research, or formatting tasks the proposal will require.
+
+Also suggest the simplest possible "v1" tech stack - what's the minimum viable set of tools to make this work TODAY.
 
 Write 300-500 words."""
 
@@ -147,8 +190,7 @@ def run_agent(
     on_stream: Callable[[str], None] | None = None,
 ) -> AgentResult:
     """Run a single agent and return its result."""
-    
-    # Stream the response
+
     full_response = ""
     with client.messages.stream(
         model="claude-sonnet-4-20250514",
@@ -171,19 +213,24 @@ def run_agent(
 # ---------------------------------------------------------------------------
 # Orchestrator: runs the full multi-agent deliberation loop
 # ---------------------------------------------------------------------------
-def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
+def run_deliberation(
+    transcript_dir: str = "transcripts",
+    on_stream: Callable[[str, str], None] | None = None,
+):
     """
     Run the full 6-step deliberation:
-      1. Researcher
-      2. Architect v1
-      3. Critical Eye
-      4. Toolsmith
-      5. Architect v2 (revised)
+      1. Researcher   (reads transcripts + proposal best practices)
+      2. Architect v1 (designs workflow plan tailored to these transcripts)
+      3. Critical Eye (identifies human judgment points specific to this client)
+      4. Toolsmith    (maps API-available tools to each step)
+      5. Architect v2 (revised plan incorporating all feedback)
       6. Critical Eye final pass
-    
+
     on_stream(agent_name, text_chunk) is called for each streamed token.
     Returns list of AgentResult objects.
     """
+    # Load transcripts
+    transcripts = load_transcripts(transcript_dir)
     results = []
 
     def make_streamer(agent_name):
@@ -196,7 +243,11 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
     researcher = run_agent(
         "Researcher",
         RESEARCHER_SYSTEM,
-        f"Here is the challenge we're designing a workflow for:\n\n{CHALLENGE}\n\nProvide your research brief on what makes transit consulting proposals win.",
+        (
+            f"CHALLENGE:\n{CHALLENGE}\n\n"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            "Provide your research brief. Ground your advice in what you read in these specific transcripts."
+        ),
         make_streamer("Researcher"),
     )
     results.append(researcher)
@@ -207,7 +258,13 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
     architect_v1 = run_agent(
         "Architect",
         ARCHITECT_SYSTEM,
-        f"CHALLENGE:\n{CHALLENGE}\n\nRESEARCHER'S FINDINGS:\n{researcher.output}\n\nDesign the workflow.",
+        (
+            f"CHALLENGE:\n{CHALLENGE}\n\n"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            f"RESEARCHER'S FINDINGS:\n{researcher.output}\n\n"
+            "Design a workflow plan tailored to these specific transcripts. "
+            "The plan should reflect this client's unique needs, politics, and context."
+        ),
         make_streamer("Architect"),
     )
     results.append(architect_v1)
@@ -218,7 +275,12 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
     critical_eye = run_agent(
         "Critical Eye",
         CRITICAL_EYE_SYSTEM,
-        f"CHALLENGE:\n{CHALLENGE}\n\nPROPOSED WORKFLOW:\n{architect_v1.output}\n\nIdentify the critical human judgment checkpoints.",
+        (
+            f"CHALLENGE:\n{CHALLENGE}\n\n"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            f"PROPOSED WORKFLOW PLAN:\n{architect_v1.output}\n\n"
+            "Identify the critical human judgment checkpoints for THIS specific client and situation."
+        ),
         make_streamer("Critical Eye"),
     )
     results.append(critical_eye)
@@ -229,7 +291,13 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
     toolsmith = run_agent(
         "Toolsmith",
         TOOLSMITH_SYSTEM,
-        f"CHALLENGE:\n{CHALLENGE}\n\nWORKFLOW:\n{architect_v1.output}\n\nHUMAN JUDGMENT CHECKPOINTS:\n{critical_eye.output}\n\nMap tools to each step.",
+        (
+            f"CHALLENGE:\n{CHALLENGE}\n\n"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            f"WORKFLOW PLAN:\n{architect_v1.output}\n\n"
+            f"HUMAN JUDGMENT CHECKPOINTS:\n{critical_eye.output}\n\n"
+            "Map tools with real APIs to each step. No GUI-only tools."
+        ),
         make_streamer("Toolsmith"),
     )
     results.append(toolsmith)
@@ -242,11 +310,12 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
         ARCHITECT_SYSTEM,
         (
             f"CHALLENGE:\n{CHALLENGE}\n\n"
-            f"YOUR ORIGINAL WORKFLOW:\n{architect_v1.output}\n\n"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            f"YOUR ORIGINAL WORKFLOW PLAN:\n{architect_v1.output}\n\n"
             f"CRITICAL EYE FEEDBACK:\n{critical_eye.output}\n\n"
             f"TOOLSMITH RECOMMENDATIONS:\n{toolsmith.output}\n\n"
-            "Revise your workflow incorporating this feedback. Show what changed and why. "
-            "This is the final workflow - make it concrete, timed, and actionable."
+            "Revise your workflow plan incorporating this feedback. Show what changed and why. "
+            "This is the final plan - make it concrete, timed, and actionable for THIS specific client."
         ),
         make_streamer("Architect (Revised)"),
     )
@@ -257,11 +326,12 @@ def run_deliberation(on_stream: Callable[[str, str], None] | None = None):
     print("\n[6/6] Critical Eye final pass...")
     critical_final = run_agent(
         "Critical Eye (Final)",
-        CRITICAL_EYE_SYSTEM + "\n\nThis is your FINAL pass. The workflow has been revised based on your earlier feedback. Confirm the human judgment checkpoints are well-placed, flag anything still missing, and give a brief final assessment of the workflow's readiness. Be concise.",
+        CRITICAL_EYE_SYSTEM + "\n\nThis is your FINAL pass. The workflow plan has been revised based on your earlier feedback. Confirm the human judgment checkpoints are well-placed for THIS CLIENT, flag anything still missing, and give a brief final assessment. Be concise.",
         (
             f"CHALLENGE:\n{CHALLENGE}\n\n"
-            f"REVISED WORKFLOW:\n{architect_v2.output}\n\n"
-            "Final review: Are the human judgment checkpoints sufficient? Is anything still automated that shouldn't be?"
+            f"CALL TRANSCRIPTS:\n{transcripts}\n\n"
+            f"REVISED WORKFLOW PLAN:\n{architect_v2.output}\n\n"
+            "Final review: Are the human judgment checkpoints sufficient for this specific client and situation?"
         ),
         make_streamer("Critical Eye (Final)"),
     )

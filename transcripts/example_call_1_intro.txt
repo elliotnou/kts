@@ -1,0 +1,47 @@
+Call 1 - Introductory Call
+Date: April 14, 2026
+Participants: Stephen Kuban (KTS), Director Patricia Mwangi (Lakeview Regional Transit Authority)
+Duration: 32 minutes
+---
+
+Stephen: Patricia, thanks for making the time. I know budget season is coming up fast.
+
+Patricia: Yeah, it's... a lot right now. But I've been following your newsletter for a few months and when I saw your workshop at the CUTA conference, I figured it was time to actually reach out.
+
+Stephen: Appreciate that. So help me understand where Lakeview is right now. What's keeping you up at night?
+
+Patricia: Honestly? Ridership. We're a mid-sized agency - 85 buses, fixed-route and paratransit. Post-pandemic ridership came back to maybe 78% of where it was. Our board keeps asking why we can't get back to 100, and I keep telling them the travel patterns have changed, but I don't have the data to prove it convincingly.
+
+Stephen: When you say you don't have the data - what are you working with right now?
+
+Patricia: We have our farebox data, which is unreliable because half our riders use passes. We have APC data on maybe 40% of the fleet - the counters are old and half of them miscount. And we have scheduling data from Trapeze but nobody really knows how to pull reports from it properly.
+
+Stephen: So you're making network decisions with partial information.
+
+Patricia: Exactly. And then the board says "well just do a comprehensive origin-destination study" and I'm like, that's a $400K project we can't afford. Our total operating budget is $12 million. Planning staff is me and two planners, one of whom is part-time.
+
+Stephen: What about your relationship with the city? Is there political support for transit investment?
+
+Patricia: Mixed. The mayor is supportive but the city council is split. Three council members think we should just cut routes that don't perform well. They don't understand that cutting the Route 7 means 200 seniors can't get to the medical center. There was a very heated public meeting about it last month.
+
+Stephen: That's important context. So the council sees underperforming routes as waste, not as equity lifelines.
+
+Patricia: Exactly. And we don't have a good way to frame that conversation. Our reports are just ridership numbers - they don't tell the story of who's riding and why it matters.
+
+Stephen: What would change if you could tell that story?
+
+Patricia: Everything. If I could go to the board and say "here's who rides Route 7, here's where they're going, here's what happens to them if we cut it" - that changes the conversation completely. But I'd also want to know where demand has shifted so we can reallocate resources intelligently, not just defend the status quo.
+
+Stephen: Makes sense. Have you looked into any technology solutions? GTFS data, real-time passenger information, anything like that?
+
+Patricia: We publish GTFS feeds - our vendor handles that. But we don't really use GTFS data for planning. I've heard about tools that can do network analysis with GTFS but honestly my team doesn't have the bandwidth or the technical skills. We're doing scheduling, customer complaints, ADA compliance, reporting to the state... there's no time left for strategic planning.
+
+Stephen: One more question - timeline. When does your board need to see something?
+
+Patricia: Our network review is supposed to go to the board in September. So realistically I'd need analysis and recommendations by August at the latest, and ideally some preliminary findings by July so I can socialize them with the council members who are on the fence.
+
+Stephen: That's tight but doable. Let me think about what a realistic scope would look like for you and we can talk again next week.
+
+Patricia: That would be great. And Stephen - whatever we do, it has to be something my team can maintain after you're gone. We've had consultants come in before, deliver a 200-page report, and leave. Nobody on staff could replicate any of it.
+
+Stephen: That's exactly the kind of thing we focus on. We'll talk soon.
