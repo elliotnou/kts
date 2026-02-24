@@ -83,7 +83,7 @@ class ResponsePDF(FPDF):
         self.cell(w, h, label, align="C")
 
 
-def generate(github_url="https://github.com/YOUR_USERNAME/workflow-architect"):
+def generate(github_url="https://github.com/elliotnou/kts"):
     pdf = ResponsePDF()
     pdf.add_page()
     pdf.set_margins(18, 14, 18)

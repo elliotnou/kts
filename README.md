@@ -33,8 +33,8 @@ The full deliberation outputs are in [`output/`](output/).
 
 ```bash
 # Clone and set up
-git clone https://github.com/YOUR_USERNAME/workflow-architect.git
-cd workflow-architect
+git clone https://github.com/elliotnou/kts.git
+cd kts
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
