@@ -147,22 +147,66 @@ def generate(github_url="https://github.com/elliotnou/kts"):
 
     pdf = ResponsePDF()
     pdf.add_page()
-    pdf.set_margins(12, 10, 12)
-    pdf.set_y(10)
+    pdf.set_margins(18, 14, 18)
+    pdf.set_y(14)
 
     W = pdf.w - pdf.l_margin - pdf.r_margin
 
-    # ── Title (compact) ──
-    pdf.set_font("Helvetica", "B", 10)
+    # ════════════════════════════════════════════════════════
+    # TITLE
+    # ════════════════════════════════════════════════════════
+    pdf.set_font("Helvetica", "B", 14)
     pdf.set_text_color(20, 20, 20)
-    pdf.cell(0, 5, "AI-Generated Proposal Workflow", new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "", 6.5)
+    pdf.cell(0, 7, "Challenge 2 - Automate My Workflow", new_x="LMARGIN", new_y="NEXT")
+    pdf.set_font("Helvetica", "", 9)
     pdf.set_text_color(*C_MUTED)
-    pdf.cell(0, 3.5, "Dynamically planned by multi-agent system from call transcripts",
-             new_x="LMARGIN", new_y="NEXT")
-    pdf.ln(3)
+    pdf.cell(0, 5, "Elliot Nou", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(2)
 
-    # ── Layout: left-to-right grid, ~65% of page ──
+    # ════════════════════════════════════════════════════════
+    # EXPLANATION
+    # ════════════════════════════════════════════════════════
+    pdf.set_font("Helvetica", "", 9.5)
+    pdf.set_text_color(*C_TEXT)
+
+    pdf.multi_cell(0, 4.5,
+        "Instead of staring at a blank page trying to sketch out the perfect workflow, "
+        "I did what any reasonable CS student would do: I built an AI system to figure it out for me."
+    )
+    pdf.ln(2)
+
+    pdf.multi_cell(0, 4.5,
+        "I built a multi-agent AI system where four specialized agents -- a Researcher, an Architect, "
+        "a Critical Eye, and a Toolsmith -- read actual call transcripts and collaboratively design a "
+        "proposal-creation workflow tailored to what the client said. The Researcher digs into what makes "
+        "proposals win. The Architect drafts a step-by-step plan. The Critical Eye tears it apart, flagging "
+        "every spot where a bad AI call could tank the client relationship. The Toolsmith maps real tools to "
+        "each step. Then the Architect revises based on all that feedback."
+    )
+    pdf.ln(2)
+
+    pdf.multi_cell(0, 4.5,
+        "The result: a workflow that's not generic. Different transcripts produce different plans, "
+        "because every client has different politics, sensitivities, and technical realities. "
+        "Human judgment stays where it matters most -- reading political dynamics, shaping "
+        "recommendations, and making the final call on what goes to the board."
+    )
+    pdf.ln(2)
+
+    # Line with clickable link
+    pdf.set_font("Helvetica", "", 9.5)
+    pdf.write(4.5, "I fed the system 3 mock call transcripts (available in the GitHub repo: ")
+    pdf.set_text_color(40, 90, 170)
+    pdf.set_font("Helvetica", "U", 9.5)
+    pdf.write(4.5, github_url, link=github_url)
+    pdf.set_font("Helvetica", "", 9.5)
+    pdf.set_text_color(*C_TEXT)
+    pdf.write(4.5, ") and ran the code. It generated the following workflow plan:")
+    pdf.ln(10)
+
+    # ════════════════════════════════════════════════════════
+    # FLOWCHART (left-to-right grid)
+    # ════════════════════════════════════════════════════════
     type_styles = {
         "auto":   (C_BG_AUTO,   C_AUTO),
         "human":  (C_BG_HUMAN,  C_HUMAN),
@@ -172,11 +216,11 @@ def generate(github_url="https://github.com/elliotnou/kts"):
     cols = 4
     rows = (len(steps) + cols - 1) // cols
     h_gap = 3.5
-    v_gap = 5
+    v_gap = 5.5
     box_w = (W - (cols - 1) * h_gap) / cols
-    # Cap box height so flowchart stays in top ~65%
-    max_flowchart_h = 297 * 0.55 - pdf.get_y()  # A4 = 297mm
-    box_h = min(32, (max_flowchart_h - (rows - 1) * v_gap) / rows)
+    # Size boxes to fill available space, leave ~30mm for legend + tools + pun
+    remaining_h = 297 - pdf.get_y() - 30
+    box_h = min(36, (remaining_h - (rows - 1) * v_gap) / rows)
 
     start_y = pdf.get_y()
     box_positions = []
@@ -198,35 +242,35 @@ def generate(github_url="https://github.com/elliotnou/kts"):
         pdf.rounded_box(x, y, box_w, box_h, 2.5, bg, border)
 
         # Step number (top-left)
-        pdf.set_font("Helvetica", "B", 6.5)
+        pdf.set_font("Helvetica", "B", 7.5)
         pdf.set_text_color(*border)
-        pdf.set_xy(x + 1.5, y + 1)
+        pdf.set_xy(x + 2, y + 1.5)
         pdf.cell(6, 3, str(idx + 1))
 
         # Type + time badge (top-right)
         badge = f"{s_type.upper()} | {step.get('time', '')}"
-        pdf.set_font("Helvetica", "B", 5)
+        pdf.set_font("Helvetica", "B", 5.5)
         pdf.set_text_color(*border)
-        pdf.set_xy(x + box_w - 22, y + 1)
-        pdf.cell(20.5, 3, badge, align="R")
+        pdf.set_xy(x + box_w - 23, y + 1.5)
+        pdf.cell(21, 3, badge, align="R")
 
         # Step name
-        pdf.set_font("Helvetica", "B", 7)
+        pdf.set_font("Helvetica", "B", 8)
         pdf.set_text_color(25, 25, 25)
-        pdf.set_xy(x + 1.5, y + 5)
-        pdf.multi_cell(box_w - 3, 3.2, step["name"], align="L")
+        pdf.set_xy(x + 2, y + 6)
+        pdf.multi_cell(box_w - 4, 3.5, step["name"], align="L")
 
         # Description
-        pdf.set_font("Helvetica", "", 5.5)
+        pdf.set_font("Helvetica", "", 6.5)
         pdf.set_text_color(70, 70, 70)
-        pdf.set_xy(x + 1.5, y + 12.5)
-        pdf.multi_cell(box_w - 3, 2.8, step.get("desc", ""), align="L")
+        pdf.set_xy(x + 2, y + 14)
+        pdf.multi_cell(box_w - 4, 3, step.get("desc", ""), align="L")
 
         # Tools (bottom)
-        pdf.set_font("Helvetica", "I", 5)
+        pdf.set_font("Helvetica", "I", 5.5)
         pdf.set_text_color(*border)
-        pdf.set_xy(x + 1.5, y + box_h - 5)
-        pdf.multi_cell(box_w - 3, 2.5, step.get("tools", ""), align="L")
+        pdf.set_xy(x + 2, y + box_h - 6)
+        pdf.multi_cell(box_w - 4, 2.8, step.get("tools", ""), align="L")
 
     # ── Arrows between boxes ──
     for i in range(len(steps) - 1):
@@ -256,6 +300,36 @@ def generate(github_url="https://github.com/elliotnou/kts"):
         pdf.set_text_color(*C_MUTED)
         pdf.set_xy(lx + 5, legend_y)
         pdf.cell(26, 3, label)
+
+    # Total workflow time
+    total_min = sum(int(''.join(c for c in step.get('time', '0') if c.isdigit()) or '0') for step in steps)
+    pdf.set_font("Helvetica", "B", 6)
+    pdf.set_text_color(*C_MUTED)
+    pdf.set_xy(pdf.l_margin + 96, legend_y)
+    pdf.cell(0, 3, f"TOTAL: ~{total_min} MIN (WITHIN 60-MIN TARGET)")
+
+    # ════════════════════════════════════════════════════════
+    # AI TOOLS USED
+    # ════════════════════════════════════════════════════════
+    pdf.set_y(legend_y + 8)
+    pdf.set_font("Helvetica", "B", 9.5)
+    pdf.set_text_color(20, 20, 20)
+    pdf.cell(0, 5, "AI Tools Used", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(1)
+
+    pdf.set_font("Helvetica", "", 8.5)
+    pdf.set_text_color(*C_TEXT)
+    pdf.multi_cell(0, 4,
+        "Claude (Anthropic API) powers all four agents -- each gets a specialized system prompt and sees "
+        "all prior reasoning. I used GitHub Copilot to write the prototype code, Streamlit for a real-time "
+        "UI where you can watch agents deliberate, and fpdf2 to dynamically generate this flowchart from "
+        "agent outputs (nothing here is hardcoded). Full codebase, transcripts, and outputs are in the repo."
+    )
+    pdf.ln(3)
+    pdf.set_font("Helvetica", "I", 8)
+    pdf.set_text_color(*C_MUTED)
+    pdf.cell(0, 4, "If this proposal process were a taco, the AI handles the shell and the human brings the salsa.",
+             align="C")
 
     # ── Output ──
     output_path = os.path.join(os.path.dirname(__file__), "challenge_2_response.pdf")

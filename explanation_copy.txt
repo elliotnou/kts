@@ -1,0 +1,7 @@
+Instead of sitting down and sketching out a workflow myself, I asked a better question: what if the plan designed itself?
+
+I built a multi-agent AI system where four specialized agents — a Researcher, an Architect, a Critical Eye, and a Toolsmith — read actual call transcripts and collaboratively design a proposal-creation workflow tailored to what the client said. The Researcher digs into what makes proposals win. The Architect drafts a step-by-step plan. The Critical Eye tears it apart, flagging every spot where a bad AI call could tank the client relationship. The Toolsmith maps real tools to each step. Then the Architect revises based on all that feedback.
+
+The result: a workflow that's not generic. Different transcripts produce different plans — because every client has different politics, sensitivities, and technical realities.
+
+I fed the system 3 mock call transcripts (available in the GitHub repo: https://github.com/elliotnou/kts) and ran the code. It generated the following workflow plan:
